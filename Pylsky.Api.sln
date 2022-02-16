@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Api", "Pylsky.Api\Pylsky.Api.csproj", "{462F88F4-B2F8-45A6-B76D-4B4A5BE4FA2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Core", "Pylsky.Core\Pylsky.Core.csproj", "{4E6F9A61-734A-45F3-BAB0-CEC7D76209FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Infrastructure", "Pylsky.Infrastructure\Pylsky.Infrastructure.csproj", "{C46E622B-7FD3-4F3D-854E-DA687664E6F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Infrastructure.Ioc", "Pylsky.Infrastructure.Ioc\Pylsky.Infrastructure.Ioc.csproj", "{BB21C3F5-4F5C-4F32-96F2-FE05A935B984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Infrastructure.Ef", "Pylsky.Infrastructure.Ef\Pylsky.Infrastructure.Ef.csproj", "{5019B9D1-A6BC-47E5-95D1-66496F402C76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Queries", "Pylsky.Queries\Pylsky.Queries.csproj", "{0B3539AE-D86E-408E-8E4F-1937611BBD22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7B18AF4E-F1BE-4094-8BC5-4073D260EE09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pylsky.Commands", "Pylsky.Commands\Pylsky.Commands.csproj", "{2F76E5EC-84B9-41F4-AE5C-1D42C430E0EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{462F88F4-B2F8-45A6-B76D-4B4A5BE4FA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{462F88F4-B2F8-45A6-B76D-4B4A5BE4FA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{462F88F4-B2F8-45A6-B76D-4B4A5BE4FA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{462F88F4-B2F8-45A6-B76D-4B4A5BE4FA2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E6F9A61-734A-45F3-BAB0-CEC7D76209FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6F9A61-734A-45F3-BAB0-CEC7D76209FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6F9A61-734A-45F3-BAB0-CEC7D76209FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6F9A61-734A-45F3-BAB0-CEC7D76209FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C46E622B-7FD3-4F3D-854E-DA687664E6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C46E622B-7FD3-4F3D-854E-DA687664E6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C46E622B-7FD3-4F3D-854E-DA687664E6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C46E622B-7FD3-4F3D-854E-DA687664E6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB21C3F5-4F5C-4F32-96F2-FE05A935B984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB21C3F5-4F5C-4F32-96F2-FE05A935B984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB21C3F5-4F5C-4F32-96F2-FE05A935B984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB21C3F5-4F5C-4F32-96F2-FE05A935B984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5019B9D1-A6BC-47E5-95D1-66496F402C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5019B9D1-A6BC-47E5-95D1-66496F402C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5019B9D1-A6BC-47E5-95D1-66496F402C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5019B9D1-A6BC-47E5-95D1-66496F402C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3539AE-D86E-408E-8E4F-1937611BBD22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3539AE-D86E-408E-8E4F-1937611BBD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3539AE-D86E-408E-8E4F-1937611BBD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3539AE-D86E-408E-8E4F-1937611BBD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F76E5EC-84B9-41F4-AE5C-1D42C430E0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F76E5EC-84B9-41F4-AE5C-1D42C430E0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F76E5EC-84B9-41F4-AE5C-1D42C430E0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F76E5EC-84B9-41F4-AE5C-1D42C430E0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C46E622B-7FD3-4F3D-854E-DA687664E6F5} = {7B18AF4E-F1BE-4094-8BC5-4073D260EE09}
+		{5019B9D1-A6BC-47E5-95D1-66496F402C76} = {7B18AF4E-F1BE-4094-8BC5-4073D260EE09}
+		{BB21C3F5-4F5C-4F32-96F2-FE05A935B984} = {7B18AF4E-F1BE-4094-8BC5-4073D260EE09}
+	EndGlobalSection
+EndGlobal
