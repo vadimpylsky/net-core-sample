@@ -1,12 +1,15 @@
-using System.Linq;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pylsky.Api.Dtos;
+using Pylsky.Api.Extensions;
 using Pylsky.Commands;
 using Pylsky.Core.Interfaces;
 using Pylsky.Queries;
+using Pylsky.Queries.Dtos;
 
 namespace Pylsky.Api.Controllers;
 
@@ -29,7 +32,17 @@ public class BugsController : ControllerBase
         _queries = queries;
     }
 
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<FixEntityDto>), (int) HttpStatusCode.OK)]
+    public async Task<IActionResult> Get()
+    {
+        var userId = HttpContext.Items.GetUserGuid();
+        var items = await _queries.GetUserFixesAsync(userId).ConfigureAwait(false);
+        return Ok(items);
+    }
+
     [HttpGet(nameof(Feed))]
+    [ProducesResponseType(typeof(IEnumerable<FixInfoDto>), (int) HttpStatusCode.OK)]
     public async Task<IActionResult> Feed()
     {
         var items = await _queries.GetInfosAsync().ConfigureAwait(false);
@@ -39,20 +52,20 @@ public class BugsController : ControllerBase
     [HttpPost(nameof(Create))]
     public async Task<IActionResult> Create(FixDto fixDto)
     {
-        var userId = HttpContext.User.Claims.First(x => x.Type == "user_id").Value;
-        var user = await _queries.GetUserAsync(userId).ConfigureAwait(false);
-
-        if (user == null)
-        {
-            var userName = HttpContext.User.Identity!.Name!;
-
-            user = await _mediator
-                .Send(new CreateUserCommand(userId, userName))
-                .ConfigureAwait(false);
-        }
+        var userId = HttpContext.Items.GetUserGuid();
 
         await _mediator
-            .Send(new AddFixCommand(user.Id, fixDto.Link, fixDto.CreatedAt))
+            .Send(new AddFixCommand(userId, fixDto.Link, fixDto.CreatedAt))
+            .ConfigureAwait(false);
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Remove(string id)
+    {
+        await _mediator
+            .Send(new DeleteCommand(id))
             .ConfigureAwait(false);
 
         return Ok();

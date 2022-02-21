@@ -2,12 +2,11 @@ using System;
 using System.IO;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Pylsky.Api.Extensions;
+using Pylsky.Api.Middlewares;
 using Pylsky.Infrastructure.Ioc;
 using Serilog;
 using Serilog.Events;
@@ -44,53 +43,11 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-
-        builder.Services.AddSwaggerGen(s =>
-        {
-            s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                In = ParameterLocation.Header,
-                Description = "Please insert JWT. Sample: 'Bearer [jwt]'",
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey
-            });
-            s.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
-                }
-            });
-        });
-
+        builder.Services.AddCustomSwaggerGen();
         builder.Services.AddFirebaseAuth();
+        builder.Services.AddCustomCors();
 
-        const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy(myAllowSpecificOrigins,
-                policyBuilder =>
-                {
-                    policyBuilder.WithOrigins("http://localhost")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .SetIsOriginAllowed(_ => true);
-                });
-        });
-
-        builder.Host.UseSerilog((context, services, configuration) => configuration
-            .ReadFrom.Configuration(context.Configuration)
-            .ReadFrom.Services(services)
-        );
-
+        builder.Host.UseSerilog();
         builder.Host.UseServiceProviderFactory(new DryIocServiceProviderFactory());
         builder.Host.ConfigureContainer<Container>(ConfigureContainer);
 
@@ -102,10 +59,11 @@ internal class Program
             app.UseSwaggerUI();
         }
 
-        app.UseCors(myAllowSpecificOrigins);
+        app.UseCustomCors();
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseMiddleware<MapToInternalUserMiddleware>();
         app.MapControllers();
         app.Run();
     }
@@ -119,29 +77,5 @@ internal class Program
         var configuration = new InfrastructureConfiguration(sqlitePath);
 
         Bootstrapper.Configure(container, configuration);
-    }
-}
-
-internal static class ServicesExtensions
-{
-    public static void AddFirebaseAuth(this IServiceCollection services)
-    {
-        //TODO: move to config
-        const string appId = "bugs-dev-befd3";
-
-        services
-            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.Authority = $"https://securetoken.google.com/{appId}";
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = $"https://securetoken.google.com/{appId}",
-                    ValidateAudience = true,
-                    ValidAudience = appId,
-                    ValidateLifetime = true
-                };
-            });
     }
 }

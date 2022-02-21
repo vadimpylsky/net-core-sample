@@ -9,7 +9,8 @@ namespace Pylsky.Commands.Internal;
 
 internal class FixesHandler :
     IRequestHandler<AddFixCommand, Guid>,
-    IRequestHandler<CreateUserCommand, UserModel>
+    IRequestHandler<CreateUserCommand, UserModel>,
+    IRequestHandler<DeleteCommand, string>
 {
     private readonly ISomeRepository _someRepository;
 
@@ -36,5 +37,14 @@ internal class FixesHandler :
             .ConfigureAwait(false);
 
         return new UserModel(id, request.Name);
+    }
+
+    public async Task<string> Handle(DeleteCommand request, CancellationToken cancellationToken)
+    {
+        await _someRepository
+            .DeleteAsync(request.Id)
+            .ConfigureAwait(false);
+
+        return request.Id;
     }
 }

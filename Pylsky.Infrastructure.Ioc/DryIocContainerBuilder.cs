@@ -60,6 +60,11 @@ internal class DryIocContainerBuilder : IContainerBuilder
         _container.RegisterMany(assemblies, Registrator.Interfaces);
     }
 
+    public T Resolve<T>()
+    {
+        return _container.Resolve<T>();
+    }
+
     private void RegisterInternal<TImplementation, TService>(IReuse reuse)
         where TImplementation : TService
     {

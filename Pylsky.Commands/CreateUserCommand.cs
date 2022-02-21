@@ -12,6 +12,6 @@ public class CreateUserCommand : IRequest<UserModel>
     }
 
     public string Id { get; }
-    
+
     public string Name { get; }
 }

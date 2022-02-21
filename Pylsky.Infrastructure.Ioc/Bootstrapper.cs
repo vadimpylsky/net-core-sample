@@ -1,4 +1,5 @@
 using DryIoc;
+using Pylsky.Core.Interfaces;
 using Pylsky.Infrastructure.Ef;
 
 namespace Pylsky.Infrastructure.Ioc;
@@ -15,5 +16,7 @@ public static class Bootstrapper
         Ef.Bootstrapper.Configure(containerBuilder, efConfig);
         Queries.Bootstrapper.Configure(containerBuilder);
         Commands.Bootstrapper.Configure(containerBuilder);
+
+        containerBuilder.Singleton<IServiceResolver>(() => new ServiceResolver(container));
     }
 }

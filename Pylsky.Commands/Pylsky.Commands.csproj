@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="MediatR" Version="10.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Pylsky.Core\Pylsky.Core.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\Pylsky.Core\Pylsky.Core.csproj" PrivateAssets="All"/>
     </ItemGroup>
 
 </Project>

@@ -13,4 +13,6 @@ public interface ISomeRepository
         DateTimeOffset fixedAt);
 
     Task<Guid> CreateUserAsync(string id, string name);
+
+    Task DeleteAsync(string requestId);
 }

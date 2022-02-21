@@ -44,4 +44,14 @@ internal class SomeRepository : ISomeRepository
 
         return entry.Entity.Id;
     }
+
+    public async Task DeleteAsync(string id)
+    {
+        var entity = await _databaseContext.Bugs
+            .FindAsync(id)
+            .ConfigureAwait(false);
+
+        _databaseContext.Bugs.Remove(entity!);
+        await _databaseContext.SaveChangesAsync().ConfigureAwait(false);
+    }
 }

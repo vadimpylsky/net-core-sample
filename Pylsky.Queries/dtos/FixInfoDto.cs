@@ -1,4 +1,4 @@
-namespace Pylsky.Queries.dtos;
+namespace Pylsky.Queries.Dtos;
 
 public class FixInfoDto
 {
