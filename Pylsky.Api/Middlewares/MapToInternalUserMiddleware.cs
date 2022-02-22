@@ -15,7 +15,9 @@ internal class MapToInternalUserMiddleware
     private readonly RequestDelegate _next;
     private readonly IServiceResolver _serviceResolver;
 
-    public MapToInternalUserMiddleware(RequestDelegate next, IServiceResolver serviceResolver)
+    public MapToInternalUserMiddleware(
+        RequestDelegate next,
+        IServiceResolver serviceResolver)
     {
         _next = next ?? throw new ArgumentNullException(nameof(next));
         _serviceResolver = serviceResolver;

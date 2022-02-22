@@ -11,10 +11,10 @@ internal class SerilogLogger<T> : IPylskyLogger<T>
 
     public SerilogLogger()
     {
-        _logger = Serilog.Log.ForContext<T>();
+        _logger = Log.ForContext<T>();
     }
 
-    public void Log(string? message, Exception? exception)
+    public void Info(string? message, Exception? exception)
     {
         _logger.Write(LogEventLevel.Information, exception, message);
     }

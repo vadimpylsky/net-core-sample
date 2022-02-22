@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Pylsky.Core.Interfaces;
 using Pylsky.Core.Models;
 using Pylsky.Infrastructure.Ef;
 using Pylsky.Queries.Dtos;
@@ -11,15 +12,21 @@ namespace Pylsky.Queries.Internal;
 
 internal class Queries : IQueries
 {
+    private readonly IPylskyLogger<Queries> _logger;
     private readonly IQueryableAggregate _queryableAggregate;
 
-    public Queries(IQueryableAggregate queryableAggregate)
+    public Queries(
+        IPylskyLogger<Queries> logger,
+        IQueryableAggregate queryableAggregate)
     {
+        _logger = logger;
         _queryableAggregate = queryableAggregate;
     }
 
     public async Task<UserModel?> GetUserAsync(string id)
     {
+        _logger.Info($"GetUserAsync({id})");
+        
         var entity = await _queryableAggregate.Developers
             .FirstOrDefaultAsync(x => x.ExternalId == id)
             .ConfigureAwait(false);
@@ -31,6 +38,8 @@ internal class Queries : IQueries
 
     public async Task<List<FixInfoDto>> GetInfosAsync()
     {
+        _logger.Info("GetInfosAsync()");
+
         var data = await _queryableAggregate.Fixes
             .Join(_queryableAggregate.Developers,
                 fix => fix.DeveloperId,
@@ -78,12 +87,14 @@ internal class Queries : IQueries
 
     public async Task<List<FixEntityDto>> GetUserFixesAsync(Guid userId)
     {
+        _logger.Info($"GetUserFixesAsync({userId})");
+        
         var data = await _queryableAggregate.Fixes
             .Where(x => x.DeveloperId == userId)
             .Join(_queryableAggregate.Bugs,
                 x => x.BugId,
                 y => y.Id,
-                (x, y) => new FixEntityDto(x.BugId, y.Link, x.FixedAt))
+                (x, y) => new FixEntityDto(x.BugId.ToString(), y.Link, x.FixedAt))
             .ToListAsync().ConfigureAwait(false);
 
         var items = data.OrderByDescending(x => x.FixedAt).ToList();

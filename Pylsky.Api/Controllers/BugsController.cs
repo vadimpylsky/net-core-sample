@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Pylsky.Api.Dtos;
 using Pylsky.Api.Extensions;
 using Pylsky.Commands;
-using Pylsky.Core.Interfaces;
 using Pylsky.Queries;
 using Pylsky.Queries.Dtos;
 
@@ -18,16 +18,13 @@ namespace Pylsky.Api.Controllers;
 [Route("[controller]")]
 public class BugsController : ControllerBase
 {
-    private readonly IPylskyLogger<BugsController> _logger;
     private readonly IMediator _mediator;
     private readonly IQueries _queries;
 
     public BugsController(
-        IPylskyLogger<BugsController> logger,
         IMediator mediator,
         IQueries queries)
     {
-        _logger = logger;
         _mediator = mediator;
         _queries = queries;
     }
@@ -61,8 +58,8 @@ public class BugsController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Remove(string id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Remove(Guid id)
     {
         await _mediator
             .Send(new DeleteCommand(id))

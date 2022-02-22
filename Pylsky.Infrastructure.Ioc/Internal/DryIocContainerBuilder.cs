@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using DryIoc;
 using MediatR;
 using Pylsky.Core.Interfaces;
 
-namespace Pylsky.Infrastructure.Ioc;
+namespace Pylsky.Infrastructure.Ioc.Internal;
 
 internal class DryIocContainerBuilder : IContainerBuilder
 {
@@ -23,22 +24,12 @@ internal class DryIocContainerBuilder : IContainerBuilder
 
     public void PerDependency<TImplementation, TService>() where TImplementation : TService
     {
-        RegisterInternal<TImplementation, TService>(Reuse.Transient);
-    }
-
-    public void Singleton<T>()
-    {
-        _container.Register<T>(Reuse.Singleton);
+        _container.Register<TService, TImplementation>(Reuse.Transient);
     }
 
     public void Singleton<T>(Func<T> factory)
     {
         _container.RegisterDelegate(factory, Reuse.Singleton);
-    }
-
-    public void Singleton<TImplementation, TService>() where TImplementation : TService
-    {
-        RegisterInternal<TImplementation, TService>(Reuse.Singleton);
     }
 
     public void PerDependencyFactory(Type type, MemberInfo factoryMethod, Type factoryType)
@@ -49,25 +40,8 @@ internal class DryIocContainerBuilder : IContainerBuilder
                 ServiceInfo.Of(factoryType)));
     }
 
-    public void Singleton<TService, TImplementation>(Func<TImplementation> factory)
-        where TImplementation : TService
-    {
-        _container.RegisterDelegate<TService>(_ => factory.Invoke(), Reuse.Singleton);
-    }
-
-    public void RegisterMany(Assembly[] assemblies)
+    public void RegisterMany(IEnumerable<Assembly> assemblies)
     {
         _container.RegisterMany(assemblies, Registrator.Interfaces);
-    }
-
-    public T Resolve<T>()
-    {
-        return _container.Resolve<T>();
-    }
-
-    private void RegisterInternal<TImplementation, TService>(IReuse reuse)
-        where TImplementation : TService
-    {
-        _container.Register<TService, TImplementation>(reuse);
     }
 }

@@ -19,7 +19,8 @@ namespace Pylsky.Infrastructure.Ef.Migrations
 
             modelBuilder.Entity("Pylsky.Infrastructure.Ef.Entities.BugEntity", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -30,6 +31,8 @@ namespace Pylsky.Infrastructure.Ef.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Link");
 
                     b.ToTable("Bugs");
                 });
@@ -59,8 +62,7 @@ namespace Pylsky.Infrastructure.Ef.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BugId")
-                        .IsRequired()
+                    b.Property<Guid>("BugId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("DeveloperId")

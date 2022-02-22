@@ -1,9 +1,9 @@
 using DryIoc;
 using Pylsky.Core.Interfaces;
 
-namespace Pylsky.Infrastructure.Ioc;
+namespace Pylsky.Infrastructure.Ioc.Internal;
 
-public class ServiceResolver : IServiceResolver
+internal class ServiceResolver : IServiceResolver
 {
     private readonly Container _container;
 

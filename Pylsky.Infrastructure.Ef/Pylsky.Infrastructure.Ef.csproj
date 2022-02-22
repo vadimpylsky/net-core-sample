@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Pylsky.Core\Pylsky.Core.csproj"/>
+        <ProjectReference Include="..\Pylsky.Core\Pylsky.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -14,7 +14,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
     </ItemGroup>
 
 </Project>

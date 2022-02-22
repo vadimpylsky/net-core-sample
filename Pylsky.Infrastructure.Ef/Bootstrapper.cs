@@ -7,7 +7,8 @@ public static class Bootstrapper
 {
     public static void Configure(IContainerBuilder containerBuilder, EfConfiguration configuration)
     {
-        containerBuilder.PerDependency<SomeRepository, ISomeRepository>();
+        containerBuilder.PerDependency<FixesRepository, IFixesRepository>();
+        containerBuilder.PerDependency<UsersRepository, IUsersRepository>();
         containerBuilder.PerDependency<QueryableAggregate, IQueryableAggregate>();
         containerBuilder.PerDependency<DatabaseContext>();
 

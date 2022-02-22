@@ -10,19 +10,28 @@ namespace Pylsky.Commands.Internal;
 internal class FixesHandler :
     IRequestHandler<AddFixCommand, Guid>,
     IRequestHandler<CreateUserCommand, UserModel>,
-    IRequestHandler<DeleteCommand, string>
+    IRequestHandler<DeleteCommand, Guid>
 {
-    private readonly ISomeRepository _someRepository;
+    private readonly IFixesRepository _fixesRepository;
+    private readonly IPylskyLogger<FixesHandler> _logger;
+    private readonly IUsersRepository _usersRepository;
 
-    public FixesHandler(ISomeRepository someRepository)
+    public FixesHandler(
+        IPylskyLogger<FixesHandler> logger,
+        IFixesRepository fixesRepository,
+        IUsersRepository usersRepository)
     {
-        _someRepository = someRepository;
+        _logger = logger;
+        _fixesRepository = fixesRepository;
+        _usersRepository = usersRepository;
     }
 
     public Task<Guid> Handle(AddFixCommand request, CancellationToken cancellationToken)
     {
+        _logger.Info("Handle(AddFixCommand request, CancellationToken cancellationToken)");
+
         var model = new Fix(
-            _someRepository,
+            _fixesRepository,
             request.DeveloperId,
             request.Link,
             request.CreatedAt);
@@ -32,17 +41,21 @@ internal class FixesHandler :
 
     public async Task<UserModel> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var id = await _someRepository
+        _logger.Info("Handle(CreateUserCommand request, CancellationToken cancellationToken)");
+
+        var id = await _usersRepository
             .CreateUserAsync(request.Id, request.Name)
             .ConfigureAwait(false);
 
         return new UserModel(id, request.Name);
     }
 
-    public async Task<string> Handle(DeleteCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(DeleteCommand request, CancellationToken cancellationToken)
     {
-        await _someRepository
-            .DeleteAsync(request.Id)
+        _logger.Info("Handle(DeleteCommand request, CancellationToken cancellationToken)");
+
+        await _fixesRepository
+            .DeleteFixAsync(request.Id)
             .ConfigureAwait(false);
 
         return request.Id;

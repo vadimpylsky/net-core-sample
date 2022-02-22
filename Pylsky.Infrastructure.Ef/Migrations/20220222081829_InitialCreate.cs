@@ -13,7 +13,7 @@ namespace Pylsky.Infrastructure.Ef.Migrations
                 name: "Bugs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Link = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
                 },
@@ -41,7 +41,7 @@ namespace Pylsky.Infrastructure.Ef.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     DeveloperId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    BugId = table.Column<string>(type: "TEXT", nullable: false),
+                    BugId = table.Column<Guid>(type: "TEXT", nullable: false),
                     FixedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -60,6 +60,11 @@ namespace Pylsky.Infrastructure.Ef.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bugs_Link",
+                table: "Bugs",
+                column: "Link");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Fixes_BugId",

@@ -1,17 +1,18 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pylsky.Infrastructure.Ef.Entities;
 
+[Index(nameof(Link))]
 public class BugEntity
 {
-    public BugEntity(string id, string link, DateTimeOffset createdAt)
+    public BugEntity(string link, DateTimeOffset createdAt)
     {
-        Id = id;
         Link = link;
         CreatedAt = createdAt;
     }
 
-    public string Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public string Link { get; private set; }
     

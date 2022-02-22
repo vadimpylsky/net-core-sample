@@ -4,7 +4,7 @@ namespace Pylsky.Infrastructure.Ef.Entities;
 
 public class FixEntity
 {
-    public FixEntity(Guid developerId, string bugId, DateTimeOffset fixedAt)
+    public FixEntity(Guid developerId, Guid bugId, DateTimeOffset fixedAt)
     {
         DeveloperId = developerId;
         BugId = bugId;
@@ -15,7 +15,7 @@ public class FixEntity
 
     public Guid DeveloperId { get; private set; }
 
-    public string BugId { get; private set; }
+    public Guid BugId { get; private set; }
 
     public DateTimeOffset FixedAt { get; private set; }
 }

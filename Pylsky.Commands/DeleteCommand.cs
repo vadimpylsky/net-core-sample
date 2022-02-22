@@ -1,13 +1,14 @@
+using System;
 using MediatR;
 
 namespace Pylsky.Commands;
 
-public class DeleteCommand : IRequest<string>
+public class DeleteCommand : IRequest<Guid>
 {
-    public DeleteCommand(string id)
+    public DeleteCommand(Guid id)
     {
         Id = id;
     }
 
-    public string Id { get; }
+    public Guid Id { get; }
 }

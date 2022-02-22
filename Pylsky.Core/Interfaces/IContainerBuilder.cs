@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Pylsky.Core.Interfaces;
@@ -12,15 +13,7 @@ public interface IContainerBuilder
 
     void PerDependencyFactory(Type type, MemberInfo factoryMethod, Type factoryType);
 
-    public void Singleton<T>();
-
     void Singleton<T>(Func<T> factory);
 
-    void Singleton<TImplementation, TService>()
-        where TImplementation : TService;
-
-    void Singleton<TService, TImplementation>(Func<TImplementation> factory)
-        where TImplementation : TService;
-
-    void RegisterMany(Assembly[] assemblies);
+    void RegisterMany(IEnumerable<Assembly> assemblies);
 }

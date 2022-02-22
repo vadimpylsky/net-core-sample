@@ -1,6 +1,7 @@
 using DryIoc;
 using Pylsky.Core.Interfaces;
 using Pylsky.Infrastructure.Ef;
+using Pylsky.Infrastructure.Ioc.Internal;
 
 namespace Pylsky.Infrastructure.Ioc;
 

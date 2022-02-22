@@ -9,11 +9,11 @@ public class Fix
 {
     private readonly DateTimeOffset _createdAt;
     private readonly Guid _developerId;
-    private readonly ISomeRepository _repository;
+    private readonly IFixesRepository _repository;
     private readonly Uri _ticketLink;
 
     public Fix(
-        ISomeRepository repository,
+        IFixesRepository repository,
         Guid developerId,
         string ticketLink,
         DateTimeOffset createdAt)
@@ -26,11 +26,8 @@ public class Fix
 
     public Task<Guid> SaveAsync()
     {
-        var bugId = _ticketLink.AbsolutePath.Split("/").Last();
-
         return _repository.SaveFixAsync(
             _developerId,
-            bugId,
             _ticketLink.OriginalString,
             _createdAt,
             DateTimeOffset.UtcNow);
